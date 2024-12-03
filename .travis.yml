@@ -5,17 +5,19 @@ services:
 before_install:
   - docker build -t belayfitsum/docker-react -f Dockerfile.dev .
 
-scripts:
-  - docker run -e CI=true belayfitsum/docker-react npm run test -- --coverage
+script:
+  - docker run -e CI=true belayfitsum/docker-react npm run test
 
 deploy:
   provider: elasticbeanstalk
   region: "eu-central-1"
-  app: "frontend"
-  env: "Frontend-env"
+  app: "docker"
+  env: "Docker-env"
   bucket_name: "elasticbeanstalk-eu-central-1-977952712667"
-  bucket_path: "frontend"
+  bucket_path: "docker"
   on:
     branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: "$AWS_SECRET_KEY"
+  access_key_id: 
+    secure: $AWS_ACCESS_KEY
+  secret_access_key: 
+    secure: "$AWS_SECRET_KEY"
